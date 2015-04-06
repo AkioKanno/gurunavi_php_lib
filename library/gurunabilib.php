@@ -62,6 +62,11 @@ class GurunabiPhpLib {
                 case 'longitude':
                 case 'range':
                     $result[$key] = urlencode($t_value);
+
+                    if (!array_key_exists('range', $result)) {
+                        $result['range'] = DEFAULT_SEARCH_RANGE;
+                    }
+
                 break;
 
                 case 'area':
@@ -73,7 +78,7 @@ class GurunabiPhpLib {
                 break;
             }
         }
-
+        echo var_export($result, true);
         return $result;
     }
 

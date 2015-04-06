@@ -18,3 +18,4 @@ define("CATEGORY_L_SEARCH_API_URL", "http://api.gnavi.co.jp/ver1/CategoryLargeSe
 // 小業態マスタ取得API
 define("CATEGORY_S_SEARCH_API_URL", "http://api.gnavi.co.jp/ver1/CategorySmallSearchAPI/?");
 
+define("DEFAULT_SEARCH_RANGE",      "1");

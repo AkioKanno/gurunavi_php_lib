@@ -8,13 +8,14 @@
 ■ レストラン簡易検索例
 
  // ライブラリの読み込み
+
 request_once('ライブラリのパス/gurunavi_php_lib/config.php');
 
 $lib = new GurunabiPhpLib("アクセスキー");
 
 $option = array(
 
-    // 検索オプション(｢★簡易検索オプション｣から好きなの組み合わせ)
+    // 検索オプション(↓ ★簡易検索オプションから好きなの組み合わせ)
 
 
     name => "やきとり次郎",
@@ -28,6 +29,8 @@ $lib->searchRestaurant($option);
 
 $result = $res;
 
+
+-----------------------------------------------------------
 
 ★ 簡易検索設定オプション(何個でも組み合わせ可)
  - 店舗名検索
@@ -48,20 +51,3 @@ $result = $res;
     
 
 -----------------------------------------------------------
-
-■ レストランカスタム検索例(玄人向け)
-
-request_once('ライブラリのパス/gurunavi_php_lib/config.php');
-
-$lib = new GurunabiPhpLib("アクセスキー");
-
-// $option は連想配列で検索したい情報を設定
-
-// ※どんな情報で検索できるかは｢http://api.gnavi.co.jp/api/manual.html#trigger3｣の
-
-     レストラン検索APIを参照
-
-$lib->customSearchRestaurant($option);
-
-$result = $lib->res;
-

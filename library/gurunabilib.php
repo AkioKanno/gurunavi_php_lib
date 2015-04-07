@@ -37,7 +37,6 @@ class GurunabiPhpLib {
         // http_build_url が入っていればそっちを使います。
         // 今回は誰でも利用できる環境なので、http_build_url相当を作成
         $url = $this->_http_build_url(REST_SEARCH_VER1_API_URL, $prm_array);
-
         $json = file_get_contents($url);
         $obj = Util::compatible_json_decode($json);
 
@@ -49,19 +48,21 @@ class GurunabiPhpLib {
         $result = array();
 
          foreach($option as $key => $value) {
-            $t_value = Util::trim_emspace($value);
-            switch ($key) {
+            $t_key = Util::trim_emspace($key);
+            switch ($t_key) {
                 case 'name':
                 case 'name_kana':
                     // url encode
-                    $result[$key] = urlencode($t_value);
+                    $t_value = Util::trim_emspace($value);
+                    $result[$t_key] = urlencode($t_value);
                 break;
 
                 // 値の加工無の場合
                 case 'latitude':
                 case 'longitude':
                 case 'range':
-                    $result[$key] = urlencode($t_value);
+                    $t_value = Util::trim_emspace($value);
+                    $result[$t_key] = urlencode($t_value);
 
                     if (!array_key_exists('range', $result)) {
                         $result['range'] = DEFAULT_SEARCH_RANGE;
@@ -74,11 +75,13 @@ class GurunabiPhpLib {
                 break;
 
                 case 'freeword':
-                    // 拡張予定
+                    $result[$t_key] = $this->_build_freeword_option($value);
+                    if (!array_key_exists('freeword_condition')) {
+                        $result['freeword_condition'] = '2';
+                    }
                 break;
             }
         }
-        echo var_export($result, true);
         return $result;
     }
 
@@ -89,5 +92,15 @@ class GurunabiPhpLib {
             $url .= "&$key=$value";
         }
         return $url;
+    }
+
+    private function _build_freeword_option($freeword = "") {
+        $result = "";
+        $words = explode(",", $freeword);
+        foreach ($words as $value) {
+            $t_value = Util::trim_emspace($value);
+            $result[] = urlencode($t_value);
+        }
+        return implode(",", $result);
     }
 }
